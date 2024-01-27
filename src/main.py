@@ -18,6 +18,17 @@ options.add_extension(ABSOLUTE_PATH_PACKED)
 driver = webdriver.Chrome(service=service, options=options)
 
 
+def get_filtered_percentage_arg() -> float:
+    if len(sys.argv) > 0:
+        return float(sys.argv[1])
+
+    return 0
+
+
+# def result_logger() -> None:
+#     print()
+
+
 def filter_percentage(
     actual_pct: float, filtered_pct: float
 ) -> None:
@@ -25,17 +36,19 @@ def filter_percentage(
 
 
 def search_skins() -> None:
-    driver.get(BASE_URL)
     card_csgo = driver.find_element(By.CLASS_NAME, "card_csgo")
     items_list = card_csgo.find_elements(By.TAG_NAME, "li")
 
     for item in items_list:
         values_list = item.find_elements(By.TAG_NAME, "span")
         if len(values_list) > 0:
-            print(values_list[-1].text, sys.argv[1])
+            print(values_list[-1].text)
 
 
 def main():
+    filtered_pct = get_filtered_percentage_arg()
+    print(filtered_pct)
+    driver.get(BASE_URL)
     search_skins()
     while True:
         pass
