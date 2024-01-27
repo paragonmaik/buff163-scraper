@@ -19,7 +19,7 @@ driver = webdriver.Chrome(service=service, options=options)
 
 
 def get_filtered_percentage_arg() -> float:
-    if len(sys.argv) > 0:
+    if len(sys.argv) > 1:
         return float(sys.argv[1])
 
     return -100
@@ -29,6 +29,8 @@ def get_filtered_percentage_arg() -> float:
 #     print()
 
 
+# TODO: add filter by diff percentage, diff price, selling
+# quantity
 def filter_by_percentage(
     actual_pct: float, filtered_pct: float
 ) -> None:
@@ -42,7 +44,12 @@ def search_skins() -> None:
     for item in items_list:
         values_list = item.find_elements(By.TAG_NAME, "span")
         if len(values_list) > 0:
-            print(values_list[-1].text)
+            print(
+                "Price diff and percentage: ",
+                values_list[-1].text,
+            )
+            print("Ask: ", values_list[-6].text)
+            print("Bid: ", values_list[-4].text)
 
 
 def main():
