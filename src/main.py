@@ -1,8 +1,12 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webelement import WebElement
+from typing import List
 import sys
 
+
+# variables
 BASE_URL = "https://buff.163.com/market/csgo"
 # ABSOLUTE_PATH_UNPACKED = '/home/maik/Dev/BuffUtility'
 ABSOLUTE_PATH_PACKED = (
@@ -25,12 +29,18 @@ def get_filtered_percentage_arg() -> float:
     return -100
 
 
-# def result_logger() -> None:
-#     print()
+def result_logger(skins_list: List[WebElement]) -> None:
+    price_diff = skins_list[-1].text
+    price_ask = skins_list[-6].text
+    price_bid = skins_list[-4].text
+
+    print("Price diff and percentage: ", price_diff)
+    print("Ask: ", price_ask)
+    print("Bid: ", price_bid)
 
 
 # TODO: add filter by diff percentage, diff price, selling
-# quantity
+# quantity, skin wear
 def filter_by_percentage(
     actual_pct: float, filtered_pct: float
 ) -> bool:
@@ -53,12 +63,15 @@ def search_skins(diff_pct: float) -> None:
         price_diff = values_list[-1].text
         price_ask = values_list[-6].text
         price_bid = values_list[-4].text
-        if filter_by_percentage(
+
+        if not filter_by_percentage(
             float(price_diff[-4:-1]), diff_pct
         ):
-            print("Price diff and percentage: ", price_diff)
-            print("Ask: ", price_ask)
-            print("Bid: ", price_bid)
+            continue
+
+        print("Price diff and percentage: ", price_diff)
+        print("Ask: ", price_ask)
+        print("Bid: ", price_bid)
 
 
 def main():
@@ -67,6 +80,7 @@ def main():
     # print(filtered_pct)
     driver.get(BASE_URL)
     search_skins(filtered_pct)
+    # result_logger(filtered_list)
     while True:
         pass
 
