@@ -22,14 +22,14 @@ def get_filtered_percentage_arg() -> float:
     if len(sys.argv) > 0:
         return float(sys.argv[1])
 
-    return 0
+    return -100
 
 
 # def result_logger() -> None:
 #     print()
 
 
-def filter_percentage(
+def filter_by_percentage(
     actual_pct: float, filtered_pct: float
 ) -> None:
     actual_pct = filtered_pct
