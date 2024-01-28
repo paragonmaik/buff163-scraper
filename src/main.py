@@ -38,9 +38,6 @@ def result_logger(skins_list: List[WebElement]) -> None:
     print("Bid: ", price_bid)
 
 
-# TODO: add filter by diff percentage X, diff price X, selling
-# quantity X, skin wear, maybe add filter based on the selling
-# and buying ratio
 # TODO: use the same func for all comparisons with the same
 # signature
 def filter_by_percentage(
@@ -115,9 +112,14 @@ def main():
 
     filtered_pct = get_float_type_command("-p")
     filtered_price_diff = get_float_type_command("-v")
-    filtered_ask = -100
-    filtered_bid = 100
-
+    filtered_ask = get_float_type_command("-q")
+    filtered_bid = get_float_type_command("-b")
+    print(
+        filtered_pct,
+        filtered_price_diff,
+        filtered_ask,
+        filtered_bid,
+    )
     driver.get(BASE_URL)
 
     search_skins(

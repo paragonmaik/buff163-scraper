@@ -44,6 +44,11 @@ COMMANDS_LIST = [
         "--bid",
         "Filters item by bid quantity based on value passed.",
     ),
+    Command(
+        "-w",
+        "--wear",
+        "Filters item by skin wear, excluding skins with the value passed.",
+    ),
 ]
 
 USED_COMMANDS_LIST = {}
