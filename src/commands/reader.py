@@ -34,6 +34,16 @@ COMMANDS_LIST = [
         "--percentage",
         "Filters item by percentage difference based on value passed.",
     ),
+    Command(
+        "-q",
+        "--quantity",
+        "Filters item by ask quantity based on value passed.",
+    ),
+    Command(
+        "-b",
+        "--bid",
+        "Filters item by bid quantity based on value passed.",
+    ),
 ]
 
 USED_COMMANDS_LIST = {}
