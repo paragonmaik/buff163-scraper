@@ -25,7 +25,7 @@ driver = webdriver.Chrome(service=service, options=options)
 def get_float_type_command(flag: str) -> float:
     if flag in USED_COMMANDS_LIST:
         return float(USED_COMMANDS_LIST[flag])
-    return -100
+    return 0
 
 
 def result_logger(skins_list: List[WebElement]) -> None:
@@ -81,16 +81,18 @@ def search_skins(
         price_diff = values_list[-1].text
         price_ask = values_list[-6].text
         price_bid = values_list[-4].text
+        skin_wear = values_list[-7].text
         ask_quantity = price_ask.split("(", 1)[-1][:-1]
         bid_quantity = price_bid.split("(", 1)[-1][:-1]
 
         if not filter_by_percentage(
-            float(price_diff[-4:-1]), diff_pct
+            float(price_diff[-5:-1]), diff_pct
         ):
             continue
 
+        print("price:  ", price_diff[1:-7])
         if not filter_by_price(
-            float(price_diff[-11:-7]), diff_price
+            float(price_diff[1:-7]), diff_price
         ):
             continue
 
@@ -105,6 +107,7 @@ def search_skins(
         print("Bid: ", price_bid)
         print("Ask quantity: ", ask_quantity)
         print("Bid quantity: ", bid_quantity)
+        print("Skin wear: ", skin_wear)
 
 
 def main():
