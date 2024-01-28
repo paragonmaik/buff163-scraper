@@ -3,7 +3,7 @@
 """
 
 import sys
-from typing import Any, List
+from typing import Any
 
 
 class Command:
@@ -39,9 +39,7 @@ COMMANDS_LIST = [
 USED_COMMANDS_LIST = {}
 
 
-# TODO: return dict with the flag as key to access the value
-def read_flags() -> dict:
-
+def read_flags() -> None:
     for i, flag in enumerate(sys.argv):
         for command in COMMANDS_LIST:
             if flag == command.short_flag:
@@ -49,7 +47,4 @@ def read_flags() -> dict:
                 USED_COMMANDS_LIST[command.short_flag] = (
                     command.value
                 )
-                # print(i, flag, command.value)
     print(USED_COMMANDS_LIST)
-
-    return USED_COMMANDS_LIST
