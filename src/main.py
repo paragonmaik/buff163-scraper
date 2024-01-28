@@ -39,7 +39,8 @@ def result_logger(skins_list: List[WebElement]) -> None:
 
 
 # TODO: add filter by diff percentage X, diff price X, selling
-# quantity, skin wear
+# quantity X, skin wear, maybe add filter based on the selling
+# and buying ratio
 # TODO: use the same func for all comparisons with the same
 # signature
 def filter_by_percentage(
@@ -58,20 +59,33 @@ def filter_by_price(
     return False
 
 
-def search_skins(diff_pct: float, diff_price: float) -> None:
+def filter_by_quantity(
+    actual_quantity: float, filtered_quantity: float
+) -> bool:
+    if actual_quantity >= filtered_quantity:
+        return True
+    return False
+
+
+def search_skins(
+    diff_pct: float,
+    diff_price: float,
+    min_ask: float,
+    min_bid: float,
+) -> None:
     card_csgo = driver.find_element(By.CLASS_NAME, "card_csgo")
     items_list = card_csgo.find_elements(By.TAG_NAME, "li")
 
     for item in items_list:
         values_list = item.find_elements(By.TAG_NAME, "span")
-        # TODO: add safe guard by negating condition
-        # and return None
         if len(values_list) < 1:
             return
 
         price_diff = values_list[-1].text
         price_ask = values_list[-6].text
         price_bid = values_list[-4].text
+        ask_quantity = price_ask.split("(", 1)[-1][:-1]
+        bid_quantity = price_bid.split("(", 1)[-1][:-1]
 
         if not filter_by_percentage(
             float(price_diff[-4:-1]), diff_pct
@@ -83,9 +97,17 @@ def search_skins(diff_pct: float, diff_price: float) -> None:
         ):
             continue
 
+        if not filter_by_quantity(float(ask_quantity), min_ask):
+            continue
+
+        if not filter_by_quantity(float(bid_quantity), min_bid):
+            continue
+
         print("Price diff and percentage: ", price_diff)
         print("Ask: ", price_ask)
         print("Bid: ", price_bid)
+        print("Ask quantity: ", ask_quantity)
+        print("Bid quantity: ", bid_quantity)
 
 
 def main():
@@ -93,10 +115,17 @@ def main():
 
     filtered_pct = get_float_type_command("-p")
     filtered_price_diff = get_float_type_command("-v")
+    filtered_ask = -100
+    filtered_bid = 100
 
     driver.get(BASE_URL)
 
-    search_skins(filtered_pct, filtered_price_diff)
+    search_skins(
+        filtered_pct,
+        filtered_price_diff,
+        filtered_ask,
+        filtered_bid,
+    )
     while True:
         pass
 
