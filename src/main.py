@@ -3,7 +3,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from typing import List
-import sys
+from commands.reader import read_flags, USED_COMMANDS_LIST
 
 
 # variables
@@ -22,10 +22,9 @@ options.add_extension(ABSOLUTE_PATH_PACKED)
 driver = webdriver.Chrome(service=service, options=options)
 
 
-def get_filtered_percentage_arg() -> float:
-    if len(sys.argv) > 1:
-        return float(sys.argv[1])
-
+def get_float_type_command(flag: str) -> float:
+    if flag in USED_COMMANDS_LIST:
+        return float(USED_COMMANDS_LIST[flag])
     return -100
 
 
@@ -39,8 +38,10 @@ def result_logger(skins_list: List[WebElement]) -> None:
     print("Bid: ", price_bid)
 
 
-# TODO: add filter by diff percentage, diff price, selling
+# TODO: add filter by diff percentage X, diff price X, selling
 # quantity, skin wear
+# TODO: use the same func for all comparisons with the same
+# signature
 def filter_by_percentage(
     actual_pct: float, filtered_pct: float
 ) -> bool:
@@ -49,7 +50,15 @@ def filter_by_percentage(
     return False
 
 
-def search_skins(diff_pct: float) -> None:
+def filter_by_price(
+    actual_price: float, filtered_price: float
+) -> bool:
+    if actual_price >= filtered_price:
+        return True
+    return False
+
+
+def search_skins(diff_pct: float, diff_price: float) -> None:
     card_csgo = driver.find_element(By.CLASS_NAME, "card_csgo")
     items_list = card_csgo.find_elements(By.TAG_NAME, "li")
 
@@ -69,18 +78,25 @@ def search_skins(diff_pct: float) -> None:
         ):
             continue
 
+        if not filter_by_price(
+            float(price_diff[-11:-7]), diff_price
+        ):
+            continue
+
         print("Price diff and percentage: ", price_diff)
         print("Ask: ", price_ask)
         print("Bid: ", price_bid)
 
 
 def main():
-    # TODO: rename func and var
-    filtered_pct = get_filtered_percentage_arg()
-    # print(filtered_pct)
+    read_flags()
+
+    filtered_pct = get_float_type_command("-p")
+    filtered_price_diff = get_float_type_command("-v")
+
     driver.get(BASE_URL)
-    search_skins(filtered_pct)
-    # result_logger(filtered_list)
+
+    search_skins(filtered_pct, filtered_price_diff)
     while True:
         pass
 
