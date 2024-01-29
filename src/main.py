@@ -97,7 +97,6 @@ def search_skins(
     count = 0
 
     for item in items_list:
-        count += 1
         values_list = item.find_elements(By.TAG_NAME, "span")
         if len(values_list) < 1:
             return
@@ -125,6 +124,7 @@ def search_skins(
         if not filter_by_quantity(float(bid_quantity), min_bid):
             continue
 
+        count += 1
         print("Price diff and percentage: ", price_diff)
         print("Ask: ", price_ask)
         print("Bid: ", price_bid)
