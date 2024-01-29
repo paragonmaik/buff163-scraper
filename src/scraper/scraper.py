@@ -114,4 +114,5 @@ def search_skins(
         print("Skin wear: ", skin_wear)
         print("Diff with: ", price_diff.split("|", 1)[0][1:])
         print("URL: ", url.get_attribute("href"))
+        print("Name: ", url.get_attribute("title"))
     print(count)
