@@ -56,30 +56,6 @@ def filter_by_float_value(
     return False
 
 
-def filter_by_percentage(
-    actual_pct: float, filtered_pct: float
-) -> bool:
-    if actual_pct >= filtered_pct:
-        return True
-    return False
-
-
-def filter_by_price(
-    actual_price: float, filtered_price: float
-) -> bool:
-    if actual_price >= filtered_price:
-        return True
-    return False
-
-
-def filter_by_quantity(
-    actual_quantity: float, filtered_quantity: float
-) -> bool:
-    if actual_quantity >= filtered_quantity:
-        return True
-    return False
-
-
 def search_skins(
     diff_pct: float,
     diff_price: float,
@@ -94,6 +70,7 @@ def search_skins(
 
     for item in items_list:
         values_list = item.find_elements(By.TAG_NAME, "span")
+        url = item.find_element(By.TAG_NAME, "a")
         if len(values_list) < 1:
             return
 
@@ -136,4 +113,5 @@ def search_skins(
         print("Bid quantity: ", bid_quantity)
         print("Skin wear: ", skin_wear)
         print("Diff with: ", price_diff.split("|", 1)[0][1:])
+        print("URL: ", url.get_attribute("href"))
     print(count)
