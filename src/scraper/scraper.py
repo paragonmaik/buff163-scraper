@@ -43,10 +43,19 @@ driver = webdriver.Chrome(service=service, options=options)
 
 # TODO: add func to concatenate skins into a list that
 # can be logged and written into file
+# def add_skins_to_list()
 
 
 # TODO: use the same func for all comparisons with the same
 # signature
+def filter_by_float_value(
+    actual: float, filtered: float
+) -> bool:
+    if actual >= filtered:
+        return True
+    return False
+
+
 def filter_by_percentage(
     actual_pct: float, filtered_pct: float
 ) -> bool:
@@ -92,23 +101,31 @@ def search_skins(
         price_ask = values_list[-6].text
         price_bid = values_list[-4].text
         skin_wear = values_list[-7].text
-        ask_quantity = price_ask.split("(", 1)[-1][:-1]
-        bid_quantity = price_bid.split("(", 1)[-1][:-1]
+        ask_quantity = values_list[-6].text.split("(", 1)[-1][
+            :-1
+        ]
+        bid_quantity = values_list[-4].text.split("(", 1)[-1][
+            :-1
+        ]
 
-        if not filter_by_percentage(
+        if not filter_by_float_value(
             float(price_diff[-5:-1]), diff_pct
         ):
             continue
 
-        if not filter_by_price(
-            float(price_diff[1:-7]), diff_price
+        if not filter_by_float_value(
+            float(price_diff.split("|", 1)[0][1:]), diff_price
         ):
             continue
 
-        if not filter_by_quantity(float(ask_quantity), min_ask):
+        if not filter_by_float_value(
+            float(ask_quantity), min_ask
+        ):
             continue
 
-        if not filter_by_quantity(float(bid_quantity), min_bid):
+        if not filter_by_float_value(
+            float(bid_quantity), min_bid
+        ):
             continue
 
         count += 1
@@ -118,4 +135,5 @@ def search_skins(
         print("Ask quantity: ", ask_quantity)
         print("Bid quantity: ", bid_quantity)
         print("Skin wear: ", skin_wear)
+        print("Diff with: ", price_diff.split("|", 1)[0][1:])
     print(count)
