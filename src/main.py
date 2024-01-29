@@ -13,6 +13,28 @@ ABSOLUTE_PATH_PACKED = (
     "/home/maik/Dev/cs-automaton/src/extensions/BuffUtility.crx"
 )
 
+
+class Skin:
+    def __init__(
+        self, name, url, wear, ask, bid, price_diff, pct_diff
+    ) -> None:
+        self.name = name
+        self.url = url
+        self.wear = wear
+        self.ask = ask
+        self.bid = bid
+        self.price_diff = price_diff
+        self.pct_diff = pct_diff
+
+    name: str = ""
+    url: str = ""
+    wear: str = ""
+    ask: str = ""
+    bid: str = ""
+    price_diff: float = 0
+    pct_diff: float = 0
+
+
 # Initial Setup
 service = Service()
 options = webdriver.ChromeOptions()
@@ -72,8 +94,10 @@ def search_skins(
 ) -> None:
     card_csgo = driver.find_element(By.CLASS_NAME, "card_csgo")
     items_list = card_csgo.find_elements(By.TAG_NAME, "li")
+    count = 0
 
     for item in items_list:
+        count += 1
         values_list = item.find_elements(By.TAG_NAME, "span")
         if len(values_list) < 1:
             return
@@ -90,7 +114,6 @@ def search_skins(
         ):
             continue
 
-        print("price:  ", price_diff[1:-7])
         if not filter_by_price(
             float(price_diff[1:-7]), diff_price
         ):
@@ -108,6 +131,7 @@ def search_skins(
         print("Ask quantity: ", ask_quantity)
         print("Bid quantity: ", bid_quantity)
         print("Skin wear: ", skin_wear)
+    print(count)
 
 
 def main():
