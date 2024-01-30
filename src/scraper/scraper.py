@@ -2,23 +2,10 @@
     Scraper module.
 """
 
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from skin import Skin, SKINS_LIST
 from logger.logger import log
-
-# variables
-# TODO: add as env variables
-BASE_URL = "https://buff.163.com/market/csgo"
-# ABSOLUTE_PATH_UNPACKED = '/home/maik/Dev/BuffUtility'
-ABSOLUTE_PATH_PACKED = (
-    "/home/maik/Dev/cs-automaton/src/extensions/BuffUtility.crx"
-)
-service = Service()
-options = webdriver.ChromeOptions()
-options.add_extension(ABSOLUTE_PATH_PACKED)
-driver = webdriver.Chrome(service=service, options=options)
 
 
 def filter_by_float_value(
@@ -29,13 +16,17 @@ def filter_by_float_value(
     return False
 
 
+def paginate(driver: WebDriver):
+    pass
+
+
 def search_skins(
     diff_pct: float,
     diff_price: float,
     min_ask: float,
     min_bid: float,
+    driver: WebDriver,
 ) -> None:
-    driver.get(BASE_URL)
 
     card_csgo = driver.find_element(By.CLASS_NAME, "card_csgo")
     items_list = card_csgo.find_elements(By.TAG_NAME, "li")
