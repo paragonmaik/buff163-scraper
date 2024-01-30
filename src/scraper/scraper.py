@@ -5,7 +5,8 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from skin import Skin, SKINS_LIST
-from logger.logger import log
+from commands.reader import get_float_type_command
+import time
 
 
 def filter_by_float_value(
@@ -16,8 +17,30 @@ def filter_by_float_value(
     return False
 
 
-def paginate(driver: WebDriver):
-    pass
+def scrape(driver: WebDriver, page_limit: int) -> None:
+    current_page = 1
+    while current_page <= page_limit:
+        time.sleep(10)
+        search_skins(
+            get_float_type_command("-p"),
+            get_float_type_command("-v"),
+            get_float_type_command("-q"),
+            get_float_type_command("-b"),
+            driver,
+        )
+        time.sleep(15)
+        paginate(driver)
+        current_page += 1
+    return
+
+
+def paginate(driver: WebDriver) -> None:
+    pagination_div = (
+        driver.find_element(By.CLASS_NAME, "simple-pagination")
+        .find_element(By.TAG_NAME, "ul")
+        .find_elements(By.TAG_NAME, "li")
+    )
+    pagination_div[-1].click()
 
 
 def search_skins(
@@ -27,7 +50,6 @@ def search_skins(
     min_bid: float,
     driver: WebDriver,
 ) -> None:
-
     card_csgo = driver.find_element(By.CLASS_NAME, "card_csgo")
     items_list = card_csgo.find_elements(By.TAG_NAME, "li")
 
@@ -86,4 +108,3 @@ def search_skins(
             skin_wear,
         )
         SKINS_LIST.append(skin)
-        log()
