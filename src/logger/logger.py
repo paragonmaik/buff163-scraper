@@ -1,0 +1,3 @@
+"""
+    Skins list logging module.
+"""
