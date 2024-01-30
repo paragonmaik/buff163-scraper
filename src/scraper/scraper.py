@@ -6,6 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from skin import Skin, SKINS_LIST
+from logger.logger import log
 
 # variables
 # TODO: add as env variables
@@ -28,11 +29,6 @@ def filter_by_float_value(
     return False
 
 
-def result_logger() -> None:
-    for skin in SKINS_LIST:
-        print(skin)
-
-
 def search_skins(
     diff_pct: float,
     diff_price: float,
@@ -43,7 +39,6 @@ def search_skins(
 
     card_csgo = driver.find_element(By.CLASS_NAME, "card_csgo")
     items_list = card_csgo.find_elements(By.TAG_NAME, "li")
-    count = 0
 
     for item in items_list:
         values_list = item.find_elements(By.TAG_NAME, "span")
@@ -88,7 +83,6 @@ def search_skins(
         ):
             continue
 
-        count += 1
         skin = Skin(
             skin_name,
             skin_url,
@@ -101,5 +95,4 @@ def search_skins(
             skin_wear,
         )
         SKINS_LIST.append(skin)
-        result_logger()
-    print(count)
+        log()
