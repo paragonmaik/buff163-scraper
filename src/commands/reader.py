@@ -57,6 +57,12 @@ COMMANDS_LIST = [
 USED_COMMANDS_LIST = {}
 
 
+def get_float_type_command(flag: str) -> float:
+    if flag in USED_COMMANDS_LIST:
+        return float(USED_COMMANDS_LIST[flag])
+    return 0
+
+
 def read_flags() -> None:
     for i, flag in enumerate(sys.argv):
         for command in COMMANDS_LIST:
@@ -65,4 +71,3 @@ def read_flags() -> None:
                 USED_COMMANDS_LIST[command.short_flag] = (
                     command.value
                 )
-    print(USED_COMMANDS_LIST)
