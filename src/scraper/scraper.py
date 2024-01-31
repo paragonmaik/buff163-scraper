@@ -17,8 +17,9 @@ def filter_by_float_value(
     return False
 
 
-def scrape(driver: WebDriver, page_limit: int) -> None:
+def scrape(driver: WebDriver) -> None:
     current_page = 1
+    page_limit = get_float_type_command("-l")
     while current_page <= page_limit:
         time.sleep(10)
         search_skins(
