@@ -17,14 +17,33 @@ options = webdriver.ChromeOptions()
 options.add_extension(ABSOLUTE_PATH_PACKED)
 driver = webdriver.Chrome(service=service, options=options)
 
+# TODO: add list with all options to use
+# with the control_bot_flow func
+
+
+def control_bot_flow() -> None:
+    print("Please sign in...")
+    print(
+        "After signing in, choose one of the following options:"
+    )
+    print(
+        """
+        1. Search for skins.
+        """
+    )
+    user_input = input()
+    print(f"You selected option: {user_input}")
+    if int(user_input) == 1:
+        scrape(driver)
+    else:
+        print("Please select a valid option.")
+
 
 def main():
     read_flags()
     driver.get(BUFF_BASE_URL)
-    manual_buff_login()
     driver.get(BUFF_MARKET_URL)
-
-    scrape(driver)
+    control_bot_flow()
     log()
 
     # Guarantees page will stay open
