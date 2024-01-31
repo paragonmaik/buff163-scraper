@@ -52,6 +52,7 @@ COMMANDS_LIST = [
         "--wear",
         "Filters item by skin wear, excluding skins with the value passed.",
     ),
+    Command("-l", "--limit", "Defines the page scraping limit."),
 ]
 
 USED_COMMANDS_LIST = {}
