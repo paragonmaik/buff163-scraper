@@ -64,6 +64,12 @@ def get_float_type_command(flag: str) -> float:
     return 0
 
 
+def get_int_type_command(flag: str) -> int:
+    if flag in USED_COMMANDS_LIST:
+        return int(USED_COMMANDS_LIST[flag])
+    return 1
+
+
 def read_flags() -> None:
     for i, flag in enumerate(sys.argv):
         for command in COMMANDS_LIST:
