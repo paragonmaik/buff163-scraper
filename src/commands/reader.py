@@ -5,9 +5,6 @@
 import sys
 from typing import Any
 
-# TODO: add help command with helper func that prints COMMANDS_LIST to the
-# terminal
-
 
 class Command:
     def __init__(

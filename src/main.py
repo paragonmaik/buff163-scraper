@@ -2,7 +2,6 @@ from commands.reader import read_flags
 from scraper.scraper import scrape
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from signin.signin import manual_buff_login
 from logger.logger import log
 
 
@@ -29,12 +28,14 @@ def control_bot_flow() -> None:
     print(
         """
         1. Search for skins.
+        2. Load settings (Scrape, Buy orders).
+        3. Display settings (Scrape, Buy orders).
         """
     )
     user_input = input()
     print(f"You selected option: {user_input}")
     if int(user_input) == 1:
-        scrape(driver)
+        scrape(driver, BUFF_MARKET_URL)
     else:
         print("Please select a valid option.")
 

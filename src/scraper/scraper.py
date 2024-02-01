@@ -20,9 +20,9 @@ def filter_by_float_value(
     return False
 
 
-def scrape(driver: WebDriver) -> None:
+def scrape(driver: WebDriver, url: str) -> None:
     # temp
-    driver.get("https://buff.163.com/market/csgo")
+    driver.get(url)
     current_page = 1
     page_limit = get_int_type_command("-l")
     while current_page <= page_limit:
