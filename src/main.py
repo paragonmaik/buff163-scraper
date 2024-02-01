@@ -37,23 +37,27 @@ def show_options() -> None:
     )
 
 
+# TODO: put into while loop
 def control_bot_flow() -> None:
     read_settings_on_bot_load(ABSOLUTE_SETTINGS_PATH)
     print("Please sign in...")
     print(
         "After signing in, choose one of the following options:"
     )
-    show_options()
-    user_input = input()
-    print(f"You selected option: {user_input}")
-    if int(user_input) == 1:
-        scrape(driver, BUFF_MARKET_URL)
-    if int(user_input) == 2:
-        handle_settings()
-    if int(user_input) == 3:
-        print(OPTIONS)
-    else:
-        print("Please select a valid option.")
+    while True:
+        show_options()
+        user_input = input()
+        print(f"You selected option: {user_input}")
+        if int(user_input) == 1:
+            scrape(driver, BUFF_MARKET_URL)
+        if int(user_input) == 2:
+            handle_settings()
+        if int(user_input) == 3:
+            print(OPTIONS)
+        if int(user_input) == 4:
+            pass
+        else:
+            print("Please select a valid option.")
 
 
 def main():
