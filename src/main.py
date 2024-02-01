@@ -6,6 +6,7 @@ from logger.logger import log
 from settings.reader import (
     handle_settings,
     read_settings_on_bot_load,
+    OPTIONS,
 )
 
 
@@ -24,25 +25,33 @@ options.add_extension(ABSOLUTE_PATH_PACKED)
 driver = webdriver.Chrome(service=service, options=options)
 
 
+# TODO: add option to show options list again
+def show_options() -> None:
+    print(
+        """
+        1. Search for skins.
+        2. Load settings (Scrape, Buy orders).
+        3. Display settings (Scrape, Buy orders).
+        4. Display scraped skins.
+        """
+    )
+
+
 def control_bot_flow() -> None:
     read_settings_on_bot_load(ABSOLUTE_SETTINGS_PATH)
     print("Please sign in...")
     print(
         "After signing in, choose one of the following options:"
     )
-    print(
-        """
-        1. Search for skins.
-        2. Load settings (Scrape, Buy orders).
-        3. Display settings (Scrape, Buy orders).
-        """
-    )
+    show_options()
     user_input = input()
     print(f"You selected option: {user_input}")
     if int(user_input) == 1:
         scrape(driver, BUFF_MARKET_URL)
     if int(user_input) == 2:
         handle_settings()
+    if int(user_input) == 3:
+        print(OPTIONS)
     else:
         print("Please select a valid option.")
 
@@ -51,7 +60,7 @@ def main():
     read_flags()
     driver.get(BUFF_BASE_URL)
     control_bot_flow()
-    log()
+    # log()
 
     # Guarantees page will stay open
     while True:

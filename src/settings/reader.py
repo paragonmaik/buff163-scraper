@@ -61,7 +61,6 @@ def convert_file_to_var(data: Any) -> None:
         OPTIONS.page_limit = data["pageLimit"]
 
         print("Settings were successfully loaded.")
-        print(OPTIONS)
     except Exception as e:
         print(f"Unable to load settings: {e}")
         raise e
