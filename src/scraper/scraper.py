@@ -21,7 +21,6 @@ def filter_by_float_value(
 
 
 def scrape(driver: WebDriver, url: str) -> None:
-    # temp
     driver.get(url)
     current_page = 1
     page_limit = get_int_type_command("-l")

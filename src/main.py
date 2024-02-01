@@ -25,7 +25,6 @@ options.add_extension(ABSOLUTE_PATH_PACKED)
 driver = webdriver.Chrome(service=service, options=options)
 
 
-# TODO: add option to show options list again
 def show_options() -> None:
     print(
         """
@@ -37,7 +36,6 @@ def show_options() -> None:
     )
 
 
-# TODO: put into while loop
 def control_bot_flow() -> None:
     read_settings_on_bot_load(ABSOLUTE_SETTINGS_PATH)
     print("Please sign in...")
@@ -55,7 +53,7 @@ def control_bot_flow() -> None:
         if int(user_input) == 3:
             print(OPTIONS)
         if int(user_input) == 4:
-            pass
+            log()
         else:
             print("Please select a valid option.")
 
