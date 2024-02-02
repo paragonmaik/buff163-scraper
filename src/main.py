@@ -1,4 +1,3 @@
-from commands.reader import read_flags
 from scraper.scraper import scrape
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -28,10 +27,10 @@ driver = webdriver.Chrome(service=service, options=options)
 def show_options() -> None:
     print(
         """
-        1. Search for skins.
-        2. Load settings (Scrape, Buy orders).
-        3. Display settings (Scrape, Buy orders).
-        4. Display scraped skins.
+    1. Search for skins.
+    2. Load settings (Scrape, Buy orders).
+    3. Display settings (Scrape, Buy orders).
+    4. Display scraped skins.
         """
     )
 
@@ -59,7 +58,6 @@ def control_bot_flow() -> None:
 
 
 def main():
-    read_flags()
     driver.get(BUFF_BASE_URL)
     control_bot_flow()
     # log()
