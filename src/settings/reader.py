@@ -53,12 +53,12 @@ def handle_settings() -> None:
 
 def convert_file_to_var(data: Any) -> None:
     try:
-        OPTIONS.price_diff = data["priceDiff"]
-        OPTIONS.pct_diff = data["pctDiff"]
-        OPTIONS.ask_qty = data["askQty"]
-        OPTIONS.bid_qty = data["bidQty"]
+        OPTIONS.price_diff = float(data["priceDiff"])
+        OPTIONS.pct_diff = float(data["pctDiff"])
+        OPTIONS.ask_qty = int(data["askQty"])
+        OPTIONS.bid_qty = int(data["bidQty"])
         OPTIONS.wear = data["wear"]
-        OPTIONS.page_limit = data["pageLimit"]
+        OPTIONS.page_limit = int(data["pageLimit"])
 
         print("Settings were successfully loaded.")
     except Exception as e:
