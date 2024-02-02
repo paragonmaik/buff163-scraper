@@ -12,5 +12,5 @@ def log() -> None:
             print(len(SKINS_LIST))
     else:
         print(
-            "List is empty, select the correct option to scrape."
+            "List is empty, select the correct option to scrape for skins first."
         )
