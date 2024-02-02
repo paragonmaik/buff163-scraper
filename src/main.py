@@ -7,6 +7,7 @@ from settings.reader import (
     read_settings_on_bot_load,
     OPTIONS,
 )
+from writer.writer import write
 
 
 BUFF_MARKET_URL = "https://buff.163.com/market/csgo"
@@ -31,6 +32,7 @@ def show_options() -> None:
     2. Load settings (Scrape, Buy orders).
     3. Display settings (Scrape, Buy orders).
     4. Display scraped skins.
+    5. Write scraped skins to file.
         """
     )
 
@@ -53,6 +55,8 @@ def control_bot_flow() -> None:
             print(OPTIONS)
         if int(user_input) == 4:
             log()
+        if int(user_input) == 5:
+            write("test")
         else:
             print("Please select a valid option.")
 

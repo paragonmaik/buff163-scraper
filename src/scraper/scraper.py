@@ -33,6 +33,7 @@ def scrape(driver: WebDriver, url: str) -> None:
         time.sleep(15)
         paginate(driver)
         current_page += 1
+    print("Scraping finished")
     return
 
 
