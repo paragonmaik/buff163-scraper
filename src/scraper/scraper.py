@@ -5,10 +5,7 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from skin import Skin, SKINS_LIST
-from commands.reader import (
-    get_float_type_command,
-    get_int_type_command,
-)
+from settings.reader import OPTIONS
 import time
 
 
@@ -23,14 +20,14 @@ def filter_by_float_value(
 def scrape(driver: WebDriver, url: str) -> None:
     driver.get(url)
     current_page = 1
-    page_limit = get_int_type_command("-l")
+    page_limit = OPTIONS.page_limit
     while current_page <= page_limit:
         time.sleep(10)
         search_skins(
-            get_float_type_command("-p"),
-            get_float_type_command("-v"),
-            get_float_type_command("-q"),
-            get_float_type_command("-b"),
+            OPTIONS.pct_diff,
+            OPTIONS.price_diff,
+            OPTIONS.ask_qty,
+            OPTIONS.bid_qty,
             driver,
         )
         time.sleep(15)
