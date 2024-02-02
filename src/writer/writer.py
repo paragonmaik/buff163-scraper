@@ -11,18 +11,18 @@ base_dict = list()
 
 def fill_base_dict() -> None:
     for skin in SKINS_LIST:
-        skin_dict = f"""
-        "skinName": "{skin.name}",
-        "askQty": "{skin.ask_quantity}",
-        "askPrice": "{skin.ask_price}",
-        "bidQty": "{skin.bid_price}",
-        "bidPrice": "{skin.bid_price}",
-        "priceDiff": "{skin.price_diff}",
-        "pctDiff": "{skin.pct_diff}",
-        "wear": "{skin.wear}",
-        "url": "{skin.url}",
-        """
-        base_dict.append("{" + skin_dict + "}")
+        skin_dict = {
+            "skinName": skin.name,
+            "askQty": skin.ask_quantity,
+            "askPrice": f"¥ {skin.ask_price}",
+            "bidQty": skin.bid_price,
+            "bidPrice": f"¥ {skin.bid_price}",
+            "priceDiff": f"¥ {skin.price_diff}",
+            "pctDiff": f"{skin.pct_diff}%",
+            "wear": skin.wear,
+            "url": skin.url,
+        }
+        base_dict.append(skin_dict)
 
 
 def write(file_name: str) -> None:
