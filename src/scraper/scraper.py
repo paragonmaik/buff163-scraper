@@ -21,6 +21,8 @@ def scrape(driver: WebDriver, url: str) -> None:
     driver.get(url)
     current_page = 1
     page_limit = OPTIONS.page_limit
+    time.sleep(15)
+    print("Please, set the necessary filters.")
     while current_page <= page_limit:
         time.sleep(10)
         search_skins(

@@ -14,10 +14,10 @@ def fill_base_dict() -> None:
         skin_dict = {
             "skinName": skin.name,
             "askQty": skin.ask_quantity,
-            "askPrice": f"¥ {skin.ask_price}",
+            "askPrice": f"RMB {skin.ask_price}",
             "bidQty": skin.bid_price,
-            "bidPrice": f"¥ {skin.bid_price}",
-            "priceDiff": f"¥ {skin.price_diff}",
+            "bidPrice": f"RMB {skin.bid_price}",
+            "priceDiff": f"RMB {skin.price_diff}",
             "pctDiff": f"{skin.pct_diff}%",
             "wear": skin.wear,
             "url": skin.url,
