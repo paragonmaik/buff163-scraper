@@ -66,7 +66,7 @@ def search_skins(
             return
 
         price_pct_diff = values_list[-1].text
-        pct_diff = price_pct_diff[-5:-1]
+        pct_diff = price_pct_diff.split("|", 1)[1][:-1]
         price_diff = price_pct_diff.split("|", 1)[0][1:]
         price_ask = values_list[-6].text.split("ask", 1)[0][1:]
         price_bid = values_list[-4].text.split("bid", 1)[0][1:]
@@ -80,13 +80,11 @@ def search_skins(
         skin_name = url_element.get_attribute("title")
         skin_url = url_element.get_attribute("href")
 
-        if not filter_by_float_value(
-            float(price_pct_diff[-5:-1]), diff_pct
-        ):
+        if not filter_by_float_value(float(pct_diff), diff_pct):
             continue
 
         if not filter_by_float_value(
-            float(price_pct_diff.split("|", 1)[0][1:]),
+            float(price_diff),
             diff_price,
         ):
             continue

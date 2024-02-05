@@ -32,6 +32,7 @@ def write(file_name: str) -> None:
             BASE_FILE_PATH + file_name + ".json", "w"
         ) as f:
             json.dump(base_dict, f, indent=2)
+            print("Writing was successfull.")
     else:
         print(
             """
