@@ -19,8 +19,8 @@ def fill_base_dict() -> None:
             "bidPrice": f"RMB {skin.bid_price}",
             "priceDiff": f"RMB {skin.price_diff}",
             "pctDiff": f"{skin.pct_diff}%",
+            "steamPct": f"{skin.steam_pct}%",
             "wear": skin.wear,
-            "steamPct": skin.steam_pct,
             "url": skin.url,
         }
         base_dict.append(skin_dict)

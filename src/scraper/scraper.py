@@ -66,6 +66,7 @@ def search_skins(
             return
 
         price_pct_diff = values_list[-1].text
+        steam_pct = values_list[-2].text[1:-1]
         pct_diff = price_pct_diff.split("|", 1)[1][:-1]
         price_diff = price_pct_diff.split("|", 1)[0][1:]
         price_ask = values_list[-6].text.split("ask", 1)[0][1:]
@@ -108,6 +109,7 @@ def search_skins(
             float(price_bid),
             float(price_diff),
             float(pct_diff),
+            float(steam_pct),
             skin_wear,
         )
         SKINS_LIST.append(skin)

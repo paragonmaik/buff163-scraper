@@ -50,6 +50,7 @@ class Skin:
     Bid Price: ¥ {self.bid_price}
     Price Difference: ¥ {self.price_diff}
     Percentage Difference: {self.pct_diff}%
+    Steam percentage: {self.steam_pct}%
     Wear: {self.wear}
     URL: {self.url.split("(", 1)[0]}
         """
