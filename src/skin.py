@@ -4,8 +4,6 @@
 
 from typing import List
 
-# ¥
-
 
 class Skin:
     def __init__(
@@ -18,6 +16,7 @@ class Skin:
         bid_price: float,
         price_diff: float,
         pct_diff: float,
+        steam_pct: float,
         wear: str,
     ) -> None:
         self.name = name or ""
@@ -28,6 +27,7 @@ class Skin:
         self.bid_price = bid_price
         self.price_diff = price_diff
         self.pct_diff = pct_diff
+        self.steam_pct = steam_pct
         self.wear = wear
 
     name: str = ""
@@ -38,6 +38,7 @@ class Skin:
     bid_price: float = 0
     price_diff: float = 0
     pct_diff: float = 0
+    steam_pct: float = 0
     wear: str = ""
 
     def __str__(self) -> str:
