@@ -4,6 +4,8 @@
 
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webelement import WebElement
+from selenium.common.exceptions import NoSuchElementException
 from skin import Skin, SKINS_LIST
 from settings.reader import OPTIONS
 import time
@@ -48,6 +50,16 @@ def paginate(driver: WebDriver) -> None:
     pagination_div[-1].click()
 
 
+def handle_skin_wear(item: WebElement) -> str | None:
+    wear = None
+    try:
+        wear = item.find_element(By.CLASS_NAME, "tag").text
+    except NoSuchElementException:
+        pass
+
+    return wear
+
+
 def search_skins(
     diff_pct: float,
     diff_price: float,
@@ -65,13 +77,14 @@ def search_skins(
         if len(values_list) < 1:
             return
 
+        skin_wear = handle_skin_wear(item)
+
         price_pct_diff = values_list[-1].text
-        steam_pct = values_list[-2].text[1:-1]
         pct_diff = price_pct_diff.split("|", 1)[1][:-1]
         price_diff = price_pct_diff.split("|", 1)[0][1:]
+        steam_pct = values_list[-2].text[1:-1]
         price_ask = values_list[-6].text.split("ask", 1)[0][1:]
         price_bid = values_list[-4].text.split("bid", 1)[0][1:]
-        skin_wear = values_list[-7].text
         ask_quantity = values_list[-6].text.split("(", 1)[-1][
             :-1
         ]
@@ -81,24 +94,38 @@ def search_skins(
         skin_name = url_element.get_attribute("title")
         skin_url = url_element.get_attribute("href")
 
-        if not filter_by_float_value(float(pct_diff), diff_pct):
-            continue
+        try:
+            if not filter_by_float_value(
+                float(pct_diff), diff_pct
+            ):
+                continue
+        except Exception as e:
+            print(e)
 
-        if not filter_by_float_value(
-            float(price_diff),
-            diff_price,
-        ):
-            continue
+        try:
+            if not filter_by_float_value(
+                float(price_diff),
+                diff_price,
+            ):
+                continue
+        except Exception as e:
+            print(e)
 
-        if not filter_by_float_value(
-            float(ask_quantity), min_ask
-        ):
-            continue
+        try:
+            if not filter_by_float_value(
+                float(ask_quantity), min_ask
+            ):
+                continue
+        except Exception as e:
+            print(e)
 
-        if not filter_by_float_value(
-            float(bid_quantity), min_bid
-        ):
-            continue
+        try:
+            if not filter_by_float_value(
+                float(bid_quantity), min_bid
+            ):
+                continue
+        except Exception as e:
+            print(e)
 
         skin = Skin(
             skin_name,
@@ -110,6 +137,6 @@ def search_skins(
             float(price_diff),
             float(pct_diff),
             float(steam_pct),
-            skin_wear,
+            skin_wear or "",
         )
         SKINS_LIST.append(skin)
