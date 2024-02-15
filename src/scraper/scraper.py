@@ -50,14 +50,18 @@ def paginate(driver: WebDriver) -> None:
     pagination_div[-1].click()
 
 
-def handle_skin_wear(item: WebElement) -> str | None:
-    wear = None
+def handle_find_element(
+    item: WebElement, class_name: str
+) -> str | None:
+    pct_price = None
     try:
-        wear = item.find_element(By.CLASS_NAME, "tag").text
+        pct_price = item.find_element(
+            By.CLASS_NAME, class_name
+        ).text
     except NoSuchElementException:
         pass
 
-    return wear
+    return pct_price
 
 
 def search_skins(
@@ -77,20 +81,26 @@ def search_skins(
         if len(values_list) < 1:
             return
 
-        skin_wear = handle_skin_wear(item)
-
-        price_pct_diff = values_list[-1].text
+        skin_wear = handle_find_element(item, "tag") or ""
+        price_pct_diff = (
+            handle_find_element(item, "pct-diff") or ""
+        )
         pct_diff = price_pct_diff.split("|", 1)[1][:-1]
         price_diff = price_pct_diff.split("|", 1)[0][1:]
-        steam_pct = values_list[-2].text[1:-1]
-        price_ask = values_list[-6].text.split("ask", 1)[0][1:]
-        price_bid = values_list[-4].text.split("bid", 1)[0][1:]
-        ask_quantity = values_list[-6].text.split("(", 1)[-1][
-            :-1
-        ]
-        bid_quantity = values_list[-4].text.split("(", 1)[-1][
-            :-1
-        ]
+
+        steam_pct_element = (
+            handle_find_element(item, "pct-steam") or ""
+        )
+        steam_pct = steam_pct_element[1:-1]
+        ask_element = handle_find_element(item, "ask-span") or ""
+        bid_element = handle_find_element(item, "bid-span") or ""
+
+        ask_quantity = ask_element.split("(", 1)[-1][:-1]
+        price_ask = ask_element.split("ask", 1)[0][1:]
+
+        price_bid = bid_element.split("bid", 1)[0][1:]
+        bid_quantity = bid_element.split("(", 1)[-1][:-1]
+
         skin_name = url_element.get_attribute("title")
         skin_url = url_element.get_attribute("href")
 
@@ -100,6 +110,7 @@ def search_skins(
             ):
                 continue
         except Exception as e:
+            pct_diff = 0
             print(e)
 
         try:
@@ -109,6 +120,7 @@ def search_skins(
             ):
                 continue
         except Exception as e:
+            price_diff = 0
             print(e)
 
         try:
@@ -117,6 +129,7 @@ def search_skins(
             ):
                 continue
         except Exception as e:
+            ask_quantity = 0
             print(e)
 
         try:
@@ -125,6 +138,7 @@ def search_skins(
             ):
                 continue
         except Exception as e:
+            bid_quantity = 0
             print(e)
 
         skin = Skin(
@@ -137,6 +151,6 @@ def search_skins(
             float(price_diff),
             float(pct_diff),
             float(steam_pct),
-            skin_wear or "",
+            skin_wear,
         )
         SKINS_LIST.append(skin)
